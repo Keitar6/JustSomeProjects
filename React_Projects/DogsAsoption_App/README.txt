@@ -1,0 +1,1 @@
+Hello, You need to know that this project was created in parcel, so if You you want to start him You to to put comand in You terminal: 'npm run dev'. You need to be in correct path ofc. Have a great day and hope to hear You soon.

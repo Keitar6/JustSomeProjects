@@ -1,0 +1,59 @@
+*,
+::before,
+::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	outline: none;
+	text-decoration: none;
+	list-style: none;
+}
+:root {
+	--TitlesColor: #ec1839;
+	--AsideBCKG: rgb(238, 232, 232);
+	--NavFonts: #302e4d;
+	--Underlines: rgb(200, 190, 190);
+	--HeaderBCKG: rgb(210, 202, 194);
+}
+
+.card-list {
+	/* border: 5px solid red; */
+	width: 85vw;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+.card {
+	background-color: #95dada;
+	/* border: 5px solid blue; */
+	border-radius: 0.3rem;
+	margin: 0.3rem;
+	width: 14.5rem;
+	height: 20rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+
+}
+.card h3 {
+	font-size: 1.2rem;
+	margin-top: 0.8rem;
+}
+.card span {
+	font-size: 1rem;
+	margin: 2rem 0 0 0;
+}
+.card img {
+	margin: 0 0;
+	border-bottom: 0.15rem solid gray;
+}
+.card:hover {
+	transform: scale(1.05);
+	transition: all 0.5s ease;
+	/* border: 5px solid blue; */
+}
