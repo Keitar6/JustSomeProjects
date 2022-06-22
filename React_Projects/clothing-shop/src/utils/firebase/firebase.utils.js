@@ -23,23 +23,30 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-const provider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
 
-provider.setCustomParameters({
+googleProvider.setCustomParameters({
 	prompt: "select_account",
 });
 
-export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+// EXPORTS
+export const auth = getAuth(); // It is something like authentication key that lets you alter the current version your database, helps us to keep track on authentications, thanks to this we know can get results from signInRedirect
+
+export const signInWithGooglePopup = () =>
+	signInWithPopup(auth, googleProvider);
+
+export const signInWithGoogleRedirect = () =>
+	signInWithRedirect(auth, googleProvider);
+
 export const database = getFirestore();
 
 export const createUserDocumentFromAuth = async (userAuth) => {
 	const userDocRef = doc(database, "users", userAuth.uid); //database, collection, unique ID --> it is looking for specific document
-	console.log(userDocRef);
+	// console.log(userDocRef);
 
 	const userSnapshot = await getDoc(userDocRef); // variable that is pointing at this specific doc
-	console.log(userSnapshot);
-	console.log(userSnapshot.exists()); //checking if this document even exists
+	// console.log(userSnapshot);
+	// console.log(userSnapshot.exists()); //checking if this document even exists
 
 	// if user data doesn't exists
 	// create/ set the document ith the data from userAuth in my collection
