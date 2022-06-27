@@ -71,6 +71,7 @@ class Details extends Component {
     );
   }
 }
+
 const WrappedDetails = () => {
   const params = useParams();
   const [theme] = useContext(ThemeContext);
