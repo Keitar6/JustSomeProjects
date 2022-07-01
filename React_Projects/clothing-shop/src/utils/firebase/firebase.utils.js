@@ -1,10 +1,10 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {
 	getAuth,
 	signInWithRedirect,
 	signInWithPopup,
 	GoogleAuthProvider,
+	createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -40,25 +40,23 @@ export const signInWithGoogleRedirect = () =>
 
 export const database = getFirestore();
 
-export const createUserDocumentFromAuth = async (userAuth) => {
-	const userDocRef = doc(database, "users", userAuth.uid); //database, collection, unique ID --> it is looking for specific document
-	// console.log(userDocRef);
-
+export const createUserDocumentFromAuth = async (
+	userAuth,
+	additionalInfos = {}
+) => {
+	const userDocRef = doc(database, "users", userAuth.uid); //database, collection, unique ID
 	const userSnapshot = await getDoc(userDocRef); // variable that is pointing at this specific doc
-	// console.log(userSnapshot);
-	// console.log(userSnapshot.exists()); //checking if this document even exists
 
-	// if user data doesn't exists
-	// create/ set the document ith the data from userAuth in my collection
 	if (!userSnapshot.exists()) {
-		const { displayName, email } = userAuth;
+		const { name, email } = userAuth;
 		const createdAt = new Date(); // when users are signing in
 		console.log("hej");
 		try {
 			await setDoc(userDocRef, {
-				displayName,
+				name,
 				email,
 				createdAt,
+				...additionalInfos,
 			});
 		} catch (error) {
 			console.log(
@@ -72,4 +70,9 @@ export const createUserDocumentFromAuth = async (userAuth) => {
 	}
 
 	return userDocRef;
+};
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+	if (!email || !password) return;
+
+	return await createUserWithEmailAndPassword(auth, email, password);
 };
