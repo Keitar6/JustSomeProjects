@@ -5,6 +5,7 @@ import {
 	signInWithPopup,
 	GoogleAuthProvider,
 	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
 } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -37,6 +38,12 @@ export const signInWithGooglePopup = () =>
 
 export const signInWithGoogleRedirect = () =>
 	signInWithRedirect(auth, googleProvider);
+export const signInByEmailAndPassword = async (email, password) => {
+	if (!email || !password) return;
+	
+	return await signInWithEmailAndPassword(auth, email, password);
+	
+};
 
 export const database = getFirestore();
 
@@ -48,17 +55,22 @@ export const createUserDocumentFromAuth = async (
 	const userSnapshot = await getDoc(userDocRef); // variable that is pointing at this specific doc
 
 	if (!userSnapshot.exists()) {
-		const { name, email } = userAuth;
+		const { displayName, email } = userAuth;
 		const createdAt = new Date(); // when users are signing in
-		console.log("hej");
+		// console.log("hej");
 		try {
 			await setDoc(userDocRef, {
-				name,
+				displayName,
 				email,
 				createdAt,
 				...additionalInfos,
 			});
 		} catch (error) {
+			// if (error.code == "weak-password") {
+			// 	console.log("The password provided is too weak.");
+			// } else if (error.code == "email-already-in-use") {
+			// 	console.log("The account already exists for that email.");
+			// }
 			console.log(
 				"I just caught some error while creating users!!",
 				error.message
